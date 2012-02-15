@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class BS extends Kohana_BS
+class Bootstrap extends Kohana_Bootstrap
 {
 	
 }

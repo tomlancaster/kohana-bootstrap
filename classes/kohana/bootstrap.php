@@ -1,30 +1,30 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Kohana_BS
+class Kohana_Bootstrap
 {
 
 	public static function input($name, $value, $errors, array $attributes = NULL)
 	{
 		$form_element = Form::input($name, $value, $attributes);
-		return BS::wrap($name, $form_element, $errors);
+		return Bootstrap::wrap($name, $form_element, $errors);
 	}
 	
 	public static function password($name, $value, $errors, array $attributes = NULL)
 	{
 		$form_element = Form::password($name, $value, $attributes);
-		return BS::wrap($name, $form_element, $errors);
+		return Bootstrap::wrap($name, $form_element, $errors);
 	}
 	
 	public static function textarea($name, $value, $errors, array $attributes = NULL)
 	{
 		$form_element = Form::textarea($name, $value, $attributes);
-		return BS::wrap($name, $form_element, $errors);
+		return Bootstrap::wrap($name, $form_element, $errors);
 	}
 	
 	public static function select($name, array $options, $selected, $errors, array $attributes = NULL)
 	{
 		$form_element = Form::select($name, $options, $selected, $attributes);
-		return BS::wrap($name, $form_element, $errors);
+		return Bootstrap::wrap($name, $form_element, $errors);
 	}
 	
 	public static function wrap($name, $form_element, $errors)
