@@ -19,6 +19,11 @@ class Kohana_Bootstrap
 		return Bootstrap::wrap($name, Form::input($name, $value, $attributes), $errors);
 	}
 	
+	public static function checkbox($name, $value, $checked = false, $errors = NULL,  array $attributes = NULL)
+	{
+		return Bootstrap::wrap($name, Form::checkbox($name, $value, $checked,  $attributes), $errors);
+	}
+	
 	/**
 	 * Creates a password form input.
 	 *
@@ -84,9 +89,7 @@ class Kohana_Bootstrap
 		$is_error = ($errors != NULL) && (Arr::get($errors, $name) != NULL);
 		$error_class = $is_error ? ' error' : '';
 		$error_html = $is_error ? '<p class="help-block">'.Arr::get($errors, $name).'</p>' : '';
-		
-		$i18n_name = __($name);
-		
+		$i18n_name = __($name, null, 'zz');
 		$out = <<<OUT
 <div class="control-group{$error_class}">
 	<label for="{$i18n_name}" class="control-label">{$i18n_name}</label>
