@@ -16,6 +16,10 @@ class Kohana_Bootstrap
 	 */
 	public static function input($name, $value, $errors = NULL, array $attributes = NULL)
 	{
+		if (!Arr::get($attributes,'id'))
+		{
+			$attributes['id'] = $name;
+		}
 		return Bootstrap::wrap($name, Form::input($name, $value, $attributes), $errors);
 	}
 	
@@ -37,6 +41,10 @@ class Kohana_Bootstrap
 	 */
 	public static function password($name, $value, $errors = NULL, array $attributes = NULL)
 	{
+		if (!Arr::get($attributes,'id'))
+		{
+			$attributes['id'] = $name;
+		}
 		return Bootstrap::wrap($name, Form::password($name, $value, $attributes), $errors);
 	}
 	
@@ -54,6 +62,10 @@ class Kohana_Bootstrap
 	 */
 	public static function textarea($name, $value, $errors = NULL, array $attributes = NULL, $double_encode = TRUE)
 	{
+		if (!Arr::get($attributes,'id'))
+		{
+			$attributes['id'] = $name;
+		}
 		return Bootstrap::wrap($name, Form::textarea($name, $value, $attributes, $double_encode), $errors);
 	}
 	
@@ -71,6 +83,10 @@ class Kohana_Bootstrap
 	 */
 	public static function select($name, array $options, $selected, $errors = NULL, array $attributes = NULL)
 	{
+		if (!Arr::get($attributes,'id'))
+		{
+			$attributes['id'] = $name;
+		}
 		return Bootstrap::wrap($name, Form::select($name, $options, $selected, $attributes), $errors);
 	}
 	
