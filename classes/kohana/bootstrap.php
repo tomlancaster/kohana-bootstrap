@@ -14,18 +14,18 @@ class Kohana_Bootstrap
 	 * @param   array   html attributes
 	 * @return  string
 	 */
-	public static function input($name, $value, $errors = NULL, array $attributes = NULL)
+	public static function input($label, $name, $value, $errors = NULL, array $attributes = NULL)
 	{
 		if (!Arr::get($attributes,'id'))
 		{
 			$attributes['id'] = $name;
 		}
-		return Bootstrap::wrap($name, Form::input($name, $value, $attributes), $errors);
+		return Bootstrap::wrap($label, $name, Form::input($name, $value, $attributes), $errors);
 	}
 	
-	public static function checkbox($name, $value, $checked = false, $errors = NULL,  array $attributes = NULL)
+	public static function checkbox($label, $name, $value, $checked = false, $errors = NULL,  array $attributes = NULL)
 	{
-		return Bootstrap::wrap($name, Form::checkbox($name, $value, $checked,  $attributes), $errors);
+		return Bootstrap::wrap($label, $name, Form::checkbox($name, $value, $checked,  $attributes), $errors);
 	}
 	
 	/**
@@ -39,13 +39,13 @@ class Kohana_Bootstrap
 	 * @param   array   html attributes
 	 * @return  string
 	 */
-	public static function password($name, $value, $errors = NULL, array $attributes = NULL)
+	public static function password($label, $name, $value, $errors = NULL, array $attributes = NULL)
 	{
 		if (!Arr::get($attributes,'id'))
 		{
 			$attributes['id'] = $name;
 		}
-		return Bootstrap::wrap($name, Form::password($name, $value, $attributes), $errors);
+		return Bootstrap::wrap($label, $name, Form::password($name, $value, $attributes), $errors);
 	}
 	
 	/**
@@ -60,13 +60,13 @@ class Kohana_Bootstrap
 	 * @param   boolean  encode existing HTML characters
 	 * @return  string
 	 */
-	public static function textarea($name, $value, $errors = NULL, array $attributes = NULL, $double_encode = TRUE)
+	public static function textarea($label, $name, $value, $errors = NULL, array $attributes = NULL, $double_encode = TRUE)
 	{
 		if (!Arr::get($attributes,'id'))
 		{
 			$attributes['id'] = $name;
 		}
-		return Bootstrap::wrap($name, Form::textarea($name, $value, $attributes, $double_encode), $errors);
+		return Bootstrap::wrap($label, $name, Form::textarea($name, $value, $attributes, $double_encode), $errors);
 	}
 	
 	/**
@@ -81,13 +81,13 @@ class Kohana_Bootstrap
 	 * @param   array    html attributes
 	 * @return  string
 	 */
-	public static function select($name, array $options, $selected, $errors = NULL, array $attributes = NULL)
+	public static function select($label, $name, array $options, $selected, $errors = NULL, array $attributes = NULL)
 	{
 		if (!Arr::get($attributes,'id'))
 		{
 			$attributes['id'] = $name;
 		}
-		return Bootstrap::wrap($name, Form::select($name, $options, $selected, $attributes), $errors);
+		return Bootstrap::wrap($label, $name, Form::select($name, $options, $selected, $attributes), $errors);
 	}
 	
 	/**
@@ -100,15 +100,14 @@ class Kohana_Bootstrap
 	 * @param   array    errors
 	 * @return  string
 	 */
-	public static function wrap($name, $form_element, $errors = NULL)
+	public static function wrap($label, $name, $form_element, $errors = NULL)
 	{
 		$is_error = ($errors != NULL) && (Arr::get($errors, $name) != NULL);
 		$error_class = $is_error ? ' error' : '';
 		$error_html = $is_error ? '<p class="help-block">'.Arr::get($errors, $name).'</p>' : '';
-		$i18n_name = __($name, null, 'zz');
 		$out = <<<OUT
 <div class="control-group{$error_class}">
-	<label for="{$i18n_name}" class="control-label">{$i18n_name}</label>
+	<label for="{$name}" class="control-label">{$label}</label>
 	<div class="controls">
 		{$form_element}{$error_html}
 	</div>
