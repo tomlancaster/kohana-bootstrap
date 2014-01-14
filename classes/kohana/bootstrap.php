@@ -39,13 +39,13 @@ class Kohana_Bootstrap
 	 * @param   array   html attributes
 	 * @return  string
 	 */
-	public static function password($label, $name, $value, $errors = NULL, array $attributes = NULL)
+	public static function password($label, $name, $value, $errors = NULL, array $attributes = NULL, $additional_content = NULL)
 	{
 		if (!Arr::get($attributes,'id'))
 		{
 			$attributes['id'] = $name;
 		}
-		return Bootstrap::wrap($label, $name, Form::password($name, $value, $attributes), $errors);
+		return Bootstrap::wrap($label, $name, Form::password($name, $value, $attributes), $errors, $additional_content);
 	}
 	
 	/**
@@ -100,7 +100,7 @@ class Kohana_Bootstrap
 	 * @param   array    errors
 	 * @return  string
 	 */
-	public static function wrap($label, $name, $form_element, $errors = NULL)
+	public static function wrap($label, $name, $form_element, $errors = NULL, $additional_content = NULL)
 	{
 		$is_error = ($errors != NULL) && (Arr::get($errors, $name) != NULL);
 		$error_class = $is_error ? ' error' : '';
@@ -110,6 +110,7 @@ class Kohana_Bootstrap
 	<label for="{$name}" class="control-label">{$label}</label>
 	<div class="controls">
 		{$form_element}{$error_html}
+		{$additional_content}
 	</div>
 </div>
 OUT;
