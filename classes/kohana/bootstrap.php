@@ -1,7 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Kohana_Bootstrap
-{
+class Kohana_Bootstrap {
 	/**
 	 * Creates a form input. If no type is specified, a "text" type input will
 	 * be returned.
@@ -14,18 +13,18 @@ class Kohana_Bootstrap
 	 * @param   array   html attributes
 	 * @return  string
 	 */
-	public static function input($label, $name, $value, $errors = NULL, array $attributes = NULL)
+	public static function input($label, $name, $value, $errors = NULL, array $attributes = NULL, $additional_content = NULL)
 	{
-		if (!Arr::get($attributes,'id'))
+		if (! Arr::get($attributes,'id'))
 		{
 			$attributes['id'] = $name;
 		}
-		return Bootstrap::wrap($label, $name, Form::input($name, $value, $attributes), $errors);
+		return Bootstrap::wrap($label, $name, Form::input($name, $value, $attributes), $errors, $additional_content);
 	}
 	
-	public static function checkbox($label, $name, $value, $checked = false, $errors = NULL,  array $attributes = NULL)
+	public static function checkbox($label, $name, $value, $checked = false, $errors = NULL,  array $attributes = NULL, $additional_content = NULL)
 	{
-		return Bootstrap::wrap($label, $name, Form::checkbox($name, $value, $checked,  $attributes), $errors);
+		return Bootstrap::wrap($label, $name, Form::checkbox($name, $value, $checked, $attributes), $errors, $additional_content);
 	}
 	
 	/**
@@ -60,13 +59,13 @@ class Kohana_Bootstrap
 	 * @param   boolean  encode existing HTML characters
 	 * @return  string
 	 */
-	public static function textarea($label, $name, $value, $errors = NULL, array $attributes = NULL, $double_encode = TRUE)
+	public static function textarea($label, $name, $value, $errors = NULL, array $attributes = NULL, $double_encode = TRUE, $additional_content = NULL)
 	{
 		if (!Arr::get($attributes,'id'))
 		{
 			$attributes['id'] = $name;
 		}
-		return Bootstrap::wrap($label, $name, Form::textarea($name, $value, $attributes, $double_encode), $errors);
+		return Bootstrap::wrap($label, $name, Form::textarea($name, $value, $attributes, $double_encode), $errors, $additional_content);
 	}
 	
 	/**
@@ -81,13 +80,13 @@ class Kohana_Bootstrap
 	 * @param   array    html attributes
 	 * @return  string
 	 */
-	public static function select($label, $name, array $options, $selected, $errors = NULL, array $attributes = NULL)
+	public static function select($label, $name, array $options, $selected, $errors = NULL, array $attributes = NULL, $additional_content = NULL)
 	{
 		if (!Arr::get($attributes,'id'))
 		{
 			$attributes['id'] = $name;
 		}
-		return Bootstrap::wrap($label, $name, Form::select($name, $options, $selected, $attributes), $errors);
+		return Bootstrap::wrap($label, $name, Form::select($name, $options, $selected, $attributes), $errors, $additional_content);
 	}
 	
 	/**
