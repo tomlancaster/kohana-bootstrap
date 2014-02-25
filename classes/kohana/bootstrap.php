@@ -80,7 +80,7 @@ class Kohana_Bootstrap {
 	 * @param   array    html attributes
 	 * @return  string
 	 */
-	public static function select($label, $name, array $options, $selected, $errors = NULL, array $attributes = NULL, $additional_content = NULL)
+	public static function select($label, $name, array $options, $selected = NULL, $errors = NULL, array $attributes = NULL, $additional_content = NULL)
 	{
 		if (!Arr::get($attributes,'id'))
 		{
