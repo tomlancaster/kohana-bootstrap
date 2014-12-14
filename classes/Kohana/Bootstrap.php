@@ -7,6 +7,7 @@ class Kohana_Bootstrap {
 	 *
 	 *     echo Bootstrap::input('username', $username);
 	 *
+	 * @param   string|array  input label
 	 * @param   string  input name
 	 * @param   string  input value
 	 * @param   array   errors
@@ -19,12 +20,13 @@ class Kohana_Bootstrap {
 		{
 			$attributes['id'] = $name;
 		}
-		return Bootstrap::wrap($label, $name, Form::input($name, $value, $attributes), $errors, $additional_content);
+		
+		return Bootstrap::group($label, $name, Form::input($name, $value, self::attributes($attributes)), $errors, $additional_content);
 	}
 	
 	public static function checkbox($label, $name, $value, $checked = false, $errors = NULL,  array $attributes = NULL, $additional_content = NULL)
 	{
-		return Bootstrap::wrap($label, $name, Form::checkbox($name, $value, $checked, $attributes), $errors, $additional_content);
+		return Bootstrap::group($label, $name, Form::checkbox($name, $value, $checked, self::attributes($attributes)), $errors, $additional_content);
 	}
 	
 	/**
@@ -44,7 +46,7 @@ class Kohana_Bootstrap {
 		{
 			$attributes['id'] = $name;
 		}
-		return Bootstrap::wrap($label, $name, Form::password($name, $value, $attributes), $errors, $additional_content);
+		return Bootstrap::group($label, $name, Form::password($name, $value, self::attributes($attributes)), $errors, $additional_content);
 	}
 	
 	/**
@@ -65,7 +67,7 @@ class Kohana_Bootstrap {
 		{
 			$attributes['id'] = $name;
 		}
-		return Bootstrap::wrap($label, $name, Form::textarea($name, $value, $attributes, $double_encode), $errors, $additional_content);
+		return Bootstrap::group($label, $name, Form::textarea($name, $value, self::attributes($attributes), $double_encode), $errors, $additional_content);
 	}
 	
 	/**
@@ -86,11 +88,11 @@ class Kohana_Bootstrap {
 		{
 			$attributes['id'] = $name;
 		}
-		return Bootstrap::wrap($label, $name, Form::select($name, $options, $selected, $attributes), $errors, $additional_content);
+		return Bootstrap::group($label, $name, Form::select($name, $options, $selected, self::attributes($attributes)), $errors, $additional_content);
 	}
 	
 	/**
-	 * Wraps a form element with Boostrap specific HTML.
+	 * Creates a Boostrap form group with error validation
 	 *
 	 *     echo Bootstrap::select('country', $countries, $country);
 	 *
@@ -99,21 +101,32 @@ class Kohana_Bootstrap {
 	 * @param   array    errors
 	 * @return  string
 	 */
-	public static function wrap($label, $name, $form_element, $errors = NULL, $additional_content = NULL)
+	public static function group($label, $name, $form_element, $errors = NULL, $additional_content = NULL)
 	{
-		$is_error = ($errors != NULL) && (Arr::get($errors, $name) != NULL);
-		$error_class = $is_error ? ' error' : '';
-		$error_html = $is_error ? '<p class="help-block">'.Arr::get($errors, $name).'</p>' : '';
-		$out = <<<OUT
-<div class="control-group{$error_class}">
-	<label for="{$name}" class="control-label">{$label}</label>
-	<div class="controls">
-		{$form_element}{$error_html}
-		{$additional_content}
-	</div>
-</div>
-OUT;
+		$label = (! is_array($label)) ? array('label' => $label, 'class' => '') : $label;
+		$has_error = (Arr::get($errors, $name) != NULL) ? 'has-error' : '';
+		$error_msg = $has_error ? '<span class="help-block">'.Arr::get($errors, $name).'</span>' : '';
 		
-		return $out;
+		return <<<HTML
+		    <div class="form-group {$has_error}">
+		    	<label class="control-label {$label['class']}" for="{$name}">{$label['label']}</label>
+		    	{$form_element}{$error_msg}
+		    	{$additional_content}
+		    </div>
+HTML;
+	}
+	
+	/**
+	 * Adds Boostrap form-control class to attributes
+	 *
+	 * @param   array  form control attributes
+	 * @return  array
+	 */
+	
+	private static function attributes($attributes)
+	{
+		$attributes['class'] = (Arr::get($attributes,'class')) ? 'form-control '.$attributes['class'] : 'form-control';
+
+		return $attributes;
 	}
 }
